@@ -1,12 +1,7 @@
-﻿using BuildWatch.DataStructure;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Web.Http;
-using System.Xml.Serialization;
 
 namespace BuildWatch
 {
@@ -20,26 +15,15 @@ namespace BuildWatch
 
         private static readonly Dictionary<string, string> Builds = new Dictionary<string, string>
         {
-            {"Slate","Slate_DevelopBuildAndDeploy"},
-            {"SlateIva","SlateIva_IntegrationTests"},
-            {"PrintManager","SlatePrintManager_DevelopBuildDeploy"},
-            {"DrspPortal","DrspPortal_Develop"},
+            {"Slate Integration","Slate_DevelopBuildAndDeploy"},
+            {"SlateIva Integration","SlateIva_IntegrationTests"},
+            {"PrintManager Integration","SlatePrintManager_DevelopBuildDeploy"},
+            {"DrspPortal Integration","DrspPortal_Develop"},
         };
         
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            //var failedBuilds = new List<BuildSummary>();
-            //var x = new BuildSummary
-            //{
-            //    BuildTypeId = "Slate_DevelopBuildAndDeploy",
-            //    DateTime = DateTime.Now.ToLongDateTime(),
-            //    Username = "Pete Johnson",
-            //    AvatarUrl = "http://foobar/test"
-            //};
-
-            //failedBuilds.Add(x);
-
             var failedBuilds = _teamCity.GetFailedBuilds(Builds);
 
             return Request.CreateResponse(HttpStatusCode.OK, failedBuilds, Request.GetConfiguration().Formatters.JsonFormatter); ;
@@ -50,8 +34,10 @@ namespace BuildWatch
     public class BuildSummary
     {
         public string BuildTypeId { get; set; }
+        public string BuildName { get; set; }
         public string DateTime { get; set; }
         public string Username { get; set; }
+        public string Name { get; set; }
         public string AvatarUrl { get; set; }
     }
 }
