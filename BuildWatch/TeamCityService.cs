@@ -33,8 +33,6 @@ namespace BuildWatch
         {
             var failedBuilds = new List<BuildSummary>();
 
-            const string buildType = "SlateIva";
-
             foreach (var kvp in buildTypes)
             {
                 var buildSummary = GetFailedBuild(kvp.Value, kvp.Key);
